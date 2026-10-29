@@ -1,5 +1,5 @@
 [ecommerce]
-44.200.20.244
+44.197.118.64
 
 [ecommerce:vars]
 ansible_user=ec2-user

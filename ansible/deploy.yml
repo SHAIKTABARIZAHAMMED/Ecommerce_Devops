@@ -48,15 +48,15 @@
 
   - name: Copy Docker Compose
     copy:
-      src: files/docker-compose.yml
+      src: /home/Ecommerce_Devops/docker-compose.yml
       dest: /opt/ecommerce/docker-compose.yml
 
   - name: Copy Nginx Config
     copy:
-      src: files/nginx.conf
+      src: /home/Ecommerce_Devops/nginx/default.conf
       dest: /opt/ecommerce/nginx.conf
 
   - name: Copy Prometheus Config
     copy:
-      src: files/prometheus.yml
+      src: /home/Ecommerce_Devops/monitoring/prometheus.yml
       dest: /opt/ecommerce/prometheus.yml
