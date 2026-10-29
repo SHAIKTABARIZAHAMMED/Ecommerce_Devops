@@ -12,14 +12,14 @@ services:
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   backend:
-    build: ./backend
+    image: shaiksdockerhub/backend:v1
     ports:
       - "5000:5000"
     depends_on:
       - postgres
 
   frontend:
-    build: ./frontend
+    image: shaiksdockerhub/frontend:v1
     ports:
       - "5173:5173"
     depends_on:
