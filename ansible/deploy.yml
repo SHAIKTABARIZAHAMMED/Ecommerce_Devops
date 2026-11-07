@@ -1,4 +1,3 @@
----
 - name: Configure Ecommerce Server
   hosts: ecommerce
   become: yes
