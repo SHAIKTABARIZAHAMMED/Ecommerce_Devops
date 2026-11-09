@@ -20,12 +20,6 @@
         name: ec2-user
         groups: docker
         append: yes
-
-    - name: Install Docker Compose Plugin
-      dnf:
-        name: docker-compose-plugin
-        state: present
-
     - name: Create application directory
       file:
         path: /opt/ecommerce
