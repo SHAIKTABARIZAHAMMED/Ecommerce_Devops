@@ -1,3 +1,4 @@
+---
 - name: Configure Ecommerce Server
   hosts: ecommerce
   become: yes
@@ -20,6 +21,7 @@
         name: ec2-user
         groups: docker
         append: yes
+
     - name: Create application directory
       file:
         path: /opt/ecommerce
@@ -28,20 +30,38 @@
         group: ec2-user
         mode: '0755'
 
-    - name: Create nginx directory
-      file:
-        path: /opt/ecommerce/nginx
-        state: directory
-        owner: ec2-user
-        group: ec2-user
+    - name: Copy Docker Compose file
+      copy:
+        src: /home/Ecommerce_Devops/docker-compose.yml
+        dest: /opt/ecommerce/docker-compose.yml
 
-    - name: Create monitoring directory
-      file:
-        path: /opt/ecommerce/monitoring
-        state: directory
-        owner: ec2-user
-        group: ec2-user
+    - name: Copy Nginx Config
+      copy:
+        src: /home/Ecommerce_Devops/nginx/default.conf
+        dest: /opt/ecommerce/nginx.conf
 
-    - name: Create postgres directory
-      file:
-        path: /opt/ecommerce/postgres
+    - name: Copy Prometheus Config
+      copy:
+        src: /home/Ecommerce_Devops/monitoring/prometheus.yml
+        dest: /opt/ecommerce/prometheus.yml
+
+    - name: Copy Postgres Init File
+      copy:
+        src: /home/Ecommerce_Devops/postgres/init.sql
+        dest: /opt/ecommerce/init.sql
+
+    - name: Stop Existing Stack
+      shell: docker compose down
+      args:
+        chdir: /opt/ecommerce
+      ignore_errors: true
+
+    - name: Pull Latest Images
+      shell: docker compose pull
+      args:
+        chdir: /opt/ecommerce
+
+    - name: Start Application Stack
+      shell: docker compose up -d
+      args:
+        chdir: /opt/ecommerce

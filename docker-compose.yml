@@ -40,7 +40,7 @@ services:
       - "80:80"
 
     volumes:
-      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
 
     depends_on:
       - frontend
@@ -66,22 +66,3 @@ services:
 
 volumes:
   postgres_data:
-  - name: Copy Postgres Init File
-    copy:
-      src: /home/Ecommerce_Devops/postgres/init.sql
-      dest: /opt/ecommerce/init.sql
-  - name: Stop existing stack
-    shell: docker compose down
-    args:
-      chdir: /opt/ecommerce
-    ignore_errors: true
-
-  - name: Pull images
-    shell: docker compose pull
-    args:
-      chdir: /opt/ecommerce
-
-  - name: Start stack
-    shell: docker compose up -d
-    args:
-      chdir: /opt/ecommerce
